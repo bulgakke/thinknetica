@@ -17,17 +17,17 @@ if a == b && a == c
 elsif 
   a==b || a==c || b==c
   statement2 = 'it is isosceles.' # Равнобедренный.
-                                  # Равносторонний треугольник по определению является равнобедренным, так что использовать оба эти описания одновременно не имеет смысла
+# Равносторонний треугольник по определению является равнобедренным, так что использовать оба эти описания одновременно не имеет смысла
 elsif c**2 == a**2 + b**2
   statement1 = 'The triangle you described is a right triangle! ' # Прямоугольный и разносторонний
 else
   statement1 = "The triangle you described isn't a right triangle and none of its sides are equal. There's not much special about it."
 end
 
-unless statement2            # если использовать просто puts stmnt1+stmnt2, то ругается на ошибку типов (думает, что stmnt == nil, т. к. ветки, 
+unless statement2             # если использовать просто puts stmnt1+stmnt2, то ругается на ошибку типов (думает, что stmnt == nil, т. к. ветки, 
   puts statement1             # в которых туда что-то писалось, не выполнялись). Другой способ обойти - в каждой ветке прописать значение в 
-else 
-  puts statement1+statement2     # переменную stmnt2, но данный способ мне показался элегантнее.
+else                          # переменную stmnt2, но данный способ мне показался элегантнее.
+  puts statement1+statement2     
 end
 
 =begin
