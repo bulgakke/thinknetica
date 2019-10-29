@@ -12,7 +12,6 @@ if d > 0
   x2 = (- b - sqrtd) / (2 * a)
   puts "This equation's roots are #{x1} and #{x2}."
 elsif d == 0
-  sqrtd = Math.sqrt(b * b - 4 * a * c) # можно эту строчку вычислить один раз, но тогда ветвление будет сложнее
   x = - b / (2 * a)
   puts "The only root this equation has is #{x}."
   
