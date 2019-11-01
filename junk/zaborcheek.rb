@@ -8,3 +8,4 @@ input.each_index do |i|
  else print input[i] 
  end
 end
+puts ''
