@@ -1,20 +1,27 @@
-names = []     # пока для простоты ввожу по трём отдельным массивам, потом посмотрим, есть ли смысл делать иначе
-prices = []
-amounts = []
-
+cart = {}
+subtotals = {}
 loop do
-  puts 'Enter the name of an item'
-  names << gets.chomp
+  puts 'Enter the name of an item or type "stop" if you don\'t want to continue'
+  name = gets.chomp
+  break if name == 'stop'
   puts 'Enter the price per unit of this item'
-  prices << gets.to_f
+  price = gets.to_f
   puts 'Enter the amount of units of this item'
-  amounts << gets.to_f 
-  puts 'Type "stop" if you\'ve entered everything you wanted, enter anything else if you want to continue adding items'
-  stop = gets.chomp
-  break if stop == 'stop'
+  amount = gets.to_f 
+
+  cart_part = { name => { price => amount } }
+  subtotal = { name => price*amount }
+
+  cart.merge!(cart_part)
+  subtotals.merge!(subtotal)
 end
 
-price_amount_pair = prices.zip(amounts).to_h
-named_hash = names.zip(price_amount_pair).to_h
-
-puts named_hash
+puts "Here's how your cart looks like!"
+cart.each do |k, v|
+  print "#{k}: "
+  v.each { |price, amount| print "#{price} per unit; #{amount} units total \n" }
+end
+puts 'This is how much each item costs you:'
+subtotals.each { |name, price| puts "#{name}: #{price}" }
+puts 'Here is your total price:'
+puts subtotals.values.sum
