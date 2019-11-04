@@ -56,7 +56,7 @@ end
 
 index += day
 
-if index.to_s.reverse.chr == '1'
+if index.to_s.reverse.chr == '1' # не нашёл, как одним методом посмотреть на последний символ числа/строки, нашёл только такое 
   suffix = 'st'
 elsif index.to_s.reverse.chr == '2'
   suffix = 'nd'
@@ -65,6 +65,6 @@ elsif index.to_s.reverse.chr == '3'
 else
   suffix = 'th'
 end
-
+#наводим красоту 
 
 puts "The date you entered is on the #{index}#{suffix} day of the year!"
