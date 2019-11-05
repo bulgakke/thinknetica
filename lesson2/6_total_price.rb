@@ -11,17 +11,19 @@ loop do
 
   cart_part = { name => { price => amount } }
   subtotal = { name => price*amount }
-
   cart.merge!(cart_part)
   subtotals.merge!(subtotal)
 end
-
+# три параметра: 'name', 'price', 'amount'. price * amount = cost
+# постарался сделать понятнее переменные
 puts "Here's how your cart looks like!"
-cart.each do |k, v|
-  print "#{k}: "
-  v.each { |price, amount| print "#{price} per unit; #{amount} units total \n" }
+cart.each do |name, cost|
+  print "#{name}: "
+  cost.each { |price, amount| puts "#{price} per unit; #{amount} units total" }
 end
+
 puts 'This is how much each item costs you:'
 subtotals.each { |name, price| puts "#{name}: #{price}" }
+
 puts 'Here is your total price:'
 puts subtotals.values.sum
