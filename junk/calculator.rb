@@ -1,5 +1,4 @@
-n1 = (0..50).to_a
-n2 = n1
+numbers = (0..50).to_a
 sign = ['+', '-', '*', '/']
 
 puts "# my_first_calculator.py by AceLewis
@@ -15,12 +14,13 @@ sign = input('What do you want to do? +, -, /, or *: ')
 num2 = int(input('Please choose your second number: '))"
 
 sign.each do |sign|
-  n1.each do |n1|
-    n2.each do |n2|
+  numbers.each do |n1|
+    numbers.each do |n2|
       result = n1 + n2 if sign == '+'
       result = n1 - n2 if sign == '-'
       result = n1 * n2 if sign == '*'
-      result = n1.to_f / n2 if sign == '/'
+      result = n1.to_f / n2 if sign == '/' && n2 != 0
+      result = 'CRITICAL ERROR CRITICAL ERROR CRITICAL ERROR' if sign == '/' && n2 == 0
       puts "if num1 == #{n1} and sign == '#{sign}' and num2 == #{n2}:
       print(\"#{n1}#{sign}#{n2} = #{result}\")"
     end
