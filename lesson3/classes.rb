@@ -1,25 +1,28 @@
 class Station
-  attr_reader :trains, :freight_trains, :passenger_trains
+  attr_reader :trains
   
   def initialize(name)
     @name = name
     @trains = []
-    @freight_trains = []
-    @passenger_trains = []
   end
 
   def get_train(train)
     @trains << train
-    @freight_trains << train if train.type == :freight
-    @passenger_trains << train if train.type == :passenger 
-    # списки поездов разных типов можно было кучей разных способов реализовать, тут вроде нормально
   end
 
   def send_train(train)
     @trains.delete(train)
-    @freight_trains.delete(train)
-    @passenger_trains.delete(train)
   end
+
+  def trains_by_type(type)
+    @trains.select { |train| train.type == type}
+  end
+=begin   А можно как-то так (и убрать attr_reader :trains)
+  def trains(type=nil)
+    @trains.select { |train| train.type == type } 
+    @trains unless type
+  end
+=end
 end
 
 class Route
