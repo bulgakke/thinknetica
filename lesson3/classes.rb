@@ -68,7 +68,7 @@ class Train
   def acquire_route(route)
     @route = route
     @station = route.stations[0]
-    @station.get_train(self) # (!) здесь всё работает, в методах движения - нет
+    @station.get_train(self) 
     @index = @route.stations.index(@station) 
     # смотрит индекс текущей станции в массиве маршрута, чтобы далее от него считать prev/next
   end
@@ -85,29 +85,13 @@ class Train
   
   def move_forward
     @station.send_train(self)
-    @station = @next_station
-    @station.get_train(self)
-  end
-=begin
-Понятия не имею, почему, но оно не работает:
-classes.rb:88:in `move_forward': undefined method `get_train' for nil:NilClass (NoMethodError)
-см. строки 71 и 108
-Думал вместо def get_train написать def self.get_train (и аналогично с send_train) - не помогло (да и не должно было)
-
-Выборочно просмотрел гитхабы других людей с курса - 
-ну там либо точно такая же логика, либо вообще нет связи со станцией (методы send_train и get_train есть, но они не вызываются в методах move_forward/move_back)
-
-Можно просто убрать связь со станцией и потом каждый раз вручную в коде писать три строчки вместо одной, но как-то гм
-=end
-  def move_back # аналогично move_forward
-    @station.send_train(self)
-    @station = @prev_station
+    @station = self.next_station
     @station.get_train(self)
   end
 
-  def move_to(station) # сделал этот метод только для тестов, но он тоже работает
+  def move_back 
     @station.send_train(self)
-    @station = station
+    @station = self.prev_station
     @station.get_train(self)
   end
 end
