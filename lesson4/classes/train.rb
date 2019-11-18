@@ -1,6 +1,7 @@
 class Train
+  # по прошлому ТЗ все эти методы нужны для интерфейса, в private ничего не подходит
   attr_accessor :speed
-  attr_reader :number, :station
+  attr_reader :number, :station, :type, :wagons
   
   def initialize(number) 
     @number = number
@@ -29,24 +30,40 @@ class Train
   end
 
   def next_station
+    if @route
     @route.stations[@index+1] if @station != @route.stations.last 
     # так как маршрут не кольцевой
+    else
+      puts "This train doesn't have a route assigned to it!"
+    end
   end
     
 
   def prev_station
+    if @route
     @route.stations[@index-1] if @station != @route.stations.first
+    else
+      puts "This train doesn't have a route assigned to it!"
+    end
   end
   
   def move_forward
-    @station.send_train(self)
-    @station = self.next_station
-    @station.get_train(self)
+    if @route 
+      @station.send_train(self)
+      @station = self.next_station
+      @station.get_train(self)
+    else
+      puts "The train you're trying to move doesn't have a route assigned to it!"
+    end
   end
 
   def move_back 
-    @station.send_train(self)
-    @station = self.prev_station
-    @station.get_train(self)
+    if @route
+      @station.send_train(self)
+      @station = self.prev_station
+      @station.get_train(self)
+    else
+      puts "The train you're trying to move doesn't have a route assigned to it!"
+    end
   end
 end
