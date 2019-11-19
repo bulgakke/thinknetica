@@ -31,19 +31,15 @@ class Train
 
   def next_station
     if @route
-    @route.stations[@index+1] if @station != @route.stations.last 
-    # так как маршрут не кольцевой
-    else
-      puts "This train doesn't have a route assigned to it!"
+    @route.stations[@index+1] if @station != @route.stations.last && @route
     end
+    # так как маршрут не кольцевой
   end
     
 
   def prev_station
     if @route
     @route.stations[@index-1] if @station != @route.stations.first
-    else
-      puts "This train doesn't have a route assigned to it!"
     end
   end
   
@@ -52,8 +48,6 @@ class Train
       @station.send_train(self)
       @station = self.next_station
       @station.get_train(self)
-    else
-      puts "The train you're trying to move doesn't have a route assigned to it!"
     end
   end
 
@@ -62,8 +56,6 @@ class Train
       @station.send_train(self)
       @station = self.prev_station
       @station.get_train(self)
-    else
-      puts "The train you're trying to move doesn't have a route assigned to it!"
     end
   end
 end
