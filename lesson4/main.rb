@@ -35,7 +35,9 @@ require_relative 'classes/cargo_wagon'
       8. View a station's info
       9. Edit a route
       
-      0. Exit"
+      0. Exit
+      ################
+      "
 
       case gets.to_i
 
