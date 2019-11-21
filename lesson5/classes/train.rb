@@ -13,7 +13,7 @@ class Train
     return nil # если строка выше что-то найдёт, то досюда не дойдёт
   end
   
-  def initialize(number, manufacturer='UNKNOWN') # делать проверку на уникальность указываемого номера?
+  def initialize(number, manufacturer=nil) # делать проверку на уникальность указываемого номера?
     @@all_trains ||= []
     @@all_trains << self
     self.register_instance
