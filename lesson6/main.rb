@@ -12,9 +12,9 @@ require_relative 'classes/cargo_wagon'
     @stations = []
     @routes = []
     # для тестов, чтобы вручную не создавать каждый раз
-     @trains = [CargoTrain.new(25252)]
-     @stations = [Station.new('qqq'), Station.new('www'), Station.new('eee')]
-     @routes = [Route.new(@stations[0], @stations[2])]
+    # @trains = [CargoTrain.new(25252)]
+    # @stations = [Station.new('qqq'), Station.new('www'), Station.new('eee')]
+    # @routes = [Route.new(@stations[0], @stations[2])]
   end
 
   def start 
@@ -38,32 +38,35 @@ require_relative 'classes/cargo_wagon'
       0. Exit
       ################
       "
+      begin
+        case gets.to_i
 
-      case gets.to_i
-
-      when 1 
-        create_train
-      when 2
-        create_station
-      when 3
-        create_route
-      when 4
-        view_trains
-      when 5
-        view_stations
-      when 6 
-        view_routes
-      when 7
-        manage_train
-      when 8
-        view_station_info
-      when 9 
-        edit_route
-      when 0 
-        break
-      else
-        puts 'Enter a number from the list'
-      end
+        when 1 
+          create_train
+        when 2
+          create_station
+        when 3
+          create_route
+        when 4
+          view_trains
+        when 5
+          view_stations
+        when 6 
+          view_routes
+        when 7
+          manage_train
+        when 8
+          view_station_info
+        when 9 
+          edit_route
+        when 0 
+          break
+        else
+          puts 'Enter a number from the list'
+        end
+      rescue RuntimeError => e
+        puts e
+      end        
     end
   end
   
@@ -76,12 +79,14 @@ require_relative 'classes/cargo_wagon'
       1. Cargo
       2. Passenger'
       
-    case gets.to_i
-    when 1 # Create a train > Cargo
-      @trains << CargoTrain.new(new_train_number)
-    when 2 # Create a train > Passenger
-      @trains << PassengerTrain.new(new_train_number)
-    end
+      case gets.to_i
+        when 1 # Create a train > Cargo
+          @trains << CargoTrain.new(new_train_number)
+          puts 'A new train has successfully been created!'
+        when 2 # Create a train > Passenger
+          @trains << PassengerTrain.new(new_train_number)
+          puts 'A new train has successfully been created!'
+      end
   end
   
   def create_station # 2

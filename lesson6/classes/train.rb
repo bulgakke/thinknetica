@@ -1,12 +1,15 @@
 require_relative '../modules/instance_counter'
 require_relative '../modules/manufacturer'
+require_relative '../modules/validation'
 
 class Train
-  include InstanceCounter
+  include InstanceCounter  
+  include Validation
   include Manufacturer
 
   attr_accessor :speed
   attr_reader :number, :station, :type, :wagons
+  @@all_trains ||= []
 
   def self.find(number)
     @@all_trains.each { |train| return train if train.number = number }
@@ -14,13 +17,13 @@ class Train
   end
   
   def initialize(number, manufacturer=nil) # делать проверку на уникальность указываемого номера?
-    @@all_trains ||= []
-    @@all_trains << self
-    self.register_instance
     @manufacturer = manufacturer
     @number = number
+    validate!
     @wagons = []
     @speed = 0
+    @@all_trains << self
+    self.register_instance
   end
 
   def stop
@@ -69,5 +72,24 @@ class Train
       @station = self.prev_station
       @station.get_train(self)
     end
+  end
+
+  protected
+
+  def validate!
+    valid_types = ['Cargo', 'Passenger'] # на будущее, если их больше будет
+    raise 'Wrong number format, must be "xxx" or "xxx-xx", where "x" is any latin/cyrillic letter or number.' if number !~ /^[a-zа-я\d]{3}(-[a-zа-я\d]{2})?$/
+    # raise 'Wrong train type, must be "Cargo" or "Passenger".' unless valid_types.include?(@type)
+    # вот это постоянно выкидывается, хотя вроде всё правильно ввожу
+    # raise 'Wrong train type, must be "Cargo" or "Passenger".' if self.type != 'Cargo' && self.type != 'Passenger' 
+    # вариант такого вида точно так же реагирует, так что дело в чём-то другом
+    raise 'A train with this number already exists' if duplicate_number
+  end
+
+  def duplicate_number
+    @@all_trains.each do |train|
+      true if train.number == self.number
+    end
+    false
   end
 end
