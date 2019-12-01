@@ -12,7 +12,7 @@ require_relative 'classes/cargo_wagon'
     @stations = []
     @routes = []
     # для тестов, чтобы вручную не создавать каждый раз
-    # @trains = [CargoTrain.new(25252)]
+    # @trains = [CargoTrain.new(252-52)]
     # @stations = [Station.new('qqq'), Station.new('www'), Station.new('eee')]
     # @routes = [Route.new(@stations[0], @stations[2])]
   end

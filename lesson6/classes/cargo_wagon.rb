@@ -1,6 +1,7 @@
 require_relative 'wagon'
 class CargoWagon < Wagon
-  def initialize
+  def initialize(manufacturer=nil)
     @type = 'Cargo'
+    super
   end
 end

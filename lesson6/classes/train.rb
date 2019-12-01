@@ -77,12 +77,9 @@ class Train
   protected
 
   def validate!
-    valid_types = ['Cargo', 'Passenger'] # на будущее, если их больше будет
+    TYPES = ['Cargo', 'Passenger'] # на будущее, если их больше будет
     raise 'Wrong number format, must be "xxx" or "xxx-xx", where "x" is any latin/cyrillic letter or number.' if number !~ /^[a-zа-я\d]{3}(-[a-zа-я\d]{2})?$/
-    # raise 'Wrong train type, must be "Cargo" or "Passenger".' unless valid_types.include?(@type)
-    # вот это постоянно выкидывается, хотя вроде всё правильно ввожу
-    # raise 'Wrong train type, must be "Cargo" or "Passenger".' if self.type != 'Cargo' && self.type != 'Passenger' 
-    # вариант такого вида точно так же реагирует, так что дело в чём-то другом
+    raise 'Wrong train type, must be "Cargo" or "Passenger".' unless TYPES.include?(@type)
     raise 'A train with this number already exists' if duplicate_number
   end
 
