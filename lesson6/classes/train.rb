@@ -10,6 +10,8 @@ class Train
   attr_accessor :speed
   attr_reader :number, :station, :type, :wagons
   @@all_trains ||= []
+  
+  TYPES = ['Cargo', 'Passenger'] # на будущее, если их больше будет
 
   def self.find(number)
     @@all_trains.each { |train| return train if train.number = number }
@@ -77,7 +79,6 @@ class Train
   protected
 
   def validate!
-    TYPES = ['Cargo', 'Passenger'] # на будущее, если их больше будет
     raise 'Wrong number format, must be "xxx" or "xxx-xx", where "x" is any latin/cyrillic letter or number.' if number !~ /^[a-zа-я\d]{3}(-[a-zа-я\d]{2})?$/
     raise 'Wrong train type, must be "Cargo" or "Passenger".' unless TYPES.include?(@type)
     raise 'A train with this number already exists' if duplicate_number
