@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../modules/manufacturer'
 require_relative '../modules/validation'
 
@@ -6,14 +8,16 @@ class Wagon
   include Validation
   attr_reader :type
 
-  def initialize(manufacturer=nil)
+  def initialize(manufacturer = nil)
     @manufacturer = manufacturer
     validate!
   end
 
-protected
+  protected
 
   def validate!
-    raise 'Wrong wagon type, must be "Cargo" or "Passenger".' unless TYPES.include?(@type)
+    return if TYPES.include?(@type)
+
+    raise 'Wrong wagon type, must be "Cargo" or "Passenger".'
   end
 end

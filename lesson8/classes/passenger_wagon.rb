@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require_relative 'wagon'
 class PassengerWagon < Wagon
   attr_accessor :number_of_seats, :seats_free, :seats_taken
 
-  def initialize(number_of_seats, manufacturer=nil)
+  def initialize(number_of_seats, manufacturer = nil)
     @type = 'Passenger'
     @number_of_seats = number_of_seats
     @seats_free = @number_of_seats
@@ -19,6 +21,8 @@ class PassengerWagon < Wagon
 
   def validate!
     super
-    raise 'Wrong data type, number of seats must be a number' if number_of_seats.class.superclass != Numeric
+    return unless number_of_seats.class.superclass != Numeric
+
+    raise 'Wrong data type, number of seats must be a number'
   end
 end

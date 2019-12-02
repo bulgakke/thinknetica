@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require_relative 'wagon'
 class CargoWagon < Wagon
   attr_accessor :cargo_volume, :volume_free, :volume_taken
 
-  def initialize(cargo_volume, manufacturer=nil)
+  def initialize(cargo_volume, manufacturer = nil)
     @type = 'Cargo'
     @cargo_volume = cargo_volume
-    @volume_free = @cargo_volume    
+    @volume_free = @cargo_volume
     @volume_taken = 0
     super
   end
@@ -19,7 +21,9 @@ class CargoWagon < Wagon
 
   def validate!
     super
-    raise 'Wrong data type, cargo volume must be a number' if cargo_volume.class.superclass != Numeric
+    return unless cargo_volume.class.superclass != Numeric
+
+    raise 'Wrong data type, cargo volume must be a number'
     # это я правильно делаю, или можно сделать почище?
   end
 end
