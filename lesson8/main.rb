@@ -252,12 +252,8 @@ class Menu
       wagons_to_remove = gets.to_i # если этой строки нет, то в строке ниже undefined method `<' for nil:NilClass
       wagons_to_remove = gets.to_i until wagons_to_remove.positive?
       (1..wagons_to_remove).each do |_counter|
-        if train_to_manage.class == CargoTrain
-          train_to_manage.remove_wagon(CargoWagon.new)
-        end
-        if train_to_manage.class == PassengerTrain
-          train_to_manage.remove_wagon(PassengerWagon.new)
-        end
+        train_to_manage.remove_wagon(CargoWagon.new) if train_to_manage.class == CargoTrain
+        train_to_manage.remove_wagon(PassengerWagon.new) if train_to_manage.class == PassengerTrain
       end
     when 4 # Manage a train > Move forward on the route
       train_to_manage.move_forward
@@ -325,7 +321,8 @@ class Menu
       route_to_edit.stations.each_with_index do |station, index|
         puts "#{index + 1}. #{station.name}"
       end
-      station_to_add_place = gets.to_i - 1 # если этой строки нет, то в строке ниже undefined method `<' for nil:NilClass
+      station_to_add_place = gets.to_i - 1
+      # если этой строки выше нет, то в строке ниже undefined method `<' for nil:NilClass
       station_to_add_place = gets.to_i - 1 until station_to_add_place < stations.length
       route_to_edit.add_station(station_to_add, station_to_add_place)
     end

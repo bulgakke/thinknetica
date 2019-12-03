@@ -20,7 +20,7 @@ class Train
     nil # если строка выше что-то найдёт, то досюда не дойдёт
   end
 
-  def initialize(number, manufacturer = nil) # делать проверку на уникальность указываемого номера?
+  def initialize(number, manufacturer = nil)
     @manufacturer = manufacturer
     @number = number
     validate!
@@ -89,9 +89,7 @@ class Train
     if number !~ /^[a-zа-я\d]{3}(-[a-zа-я\d]{2})?$/
       raise 'Wrong number format, must be "xxx" or "xxx-xx", where "x" is any latin/cyrillic letter or number.'
     end
-    unless TYPES.include?(@type)
-      raise 'Wrong train type, must be "Cargo" or "Passenger".'
-    end
+    raise 'Wrong train type, must be "Cargo" or "Passenger".' unless TYPES.include?(@type)
     raise 'A train with this number already exists' if duplicate_number
   end
 

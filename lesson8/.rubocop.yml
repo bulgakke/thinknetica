@@ -1,0 +1,40 @@
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Exclude:
+    - 'main.rb'
+
+Style/ClassVars: # ругался на переменные @@all_stations и @@all_trains
+  Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+    - 'main.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Style/CommentedKeyword: # из классов я это убрал, но в main.rb всё-таки они уместны, я считаю
+  Exclude:
+    - 'main.rb'
+
+Style/AsciiComments: # возьмусь предположить, что в учебном проекте пойдёт
+  Enabled: false 
+
+Metrics/AbcSize:
+  Exclude:
+    - 'main.rb'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'main.rb'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'main.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'main.rb'
+    
