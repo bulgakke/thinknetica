@@ -7,6 +7,7 @@ class Station
   include InstanceCounter
   include Validation
   attr_reader :trains, :name
+  validate :name, :characters
 
   def self.all
     @@all_stations ||= []
@@ -38,27 +39,5 @@ class Station
 
   def send_train(train)
     @trains.delete(train)
-  end
-
-  # Для простоты начнём со станций
-  # Конкретного ТЗ нет, выдумаю сам
-
-  protected
-
-  def validate!
-    raise 'The name length should be between 3 and 15 characters.' unless (3..15).include?(name.length)
-    return unless invalid_chars?
-
-    raise "You can only use Latin and Cyrillic, numbers, spaces, '-' and '_'."
-  end
-
-  def invalid_chars?
-    allowed = ('A'..'Z').to_a + ('a'..'z').to_a + ('А'..'Я').to_a + ('а'..'я').to_a + ('0'..'9').to_a + ['-', '_', ' ']
-    # ничего, что я в таких случаях return пишу?
-    # и самому понятнее, что происходит, и вообще на всякий случай
-    @name.chars.each do |character|
-      return true if allowed.include?(character) == false
-    end
-    false
   end
 end

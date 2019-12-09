@@ -9,11 +9,16 @@ class Train
   include Validation
   include Manufacturer
 
+  TYPES = %w[Cargo Passenger].freeze # на будущее, если их больше будет
+  NUMBER_FORMAT = /^[a-zа-я\d]{3}(-[a-zа-я\d]{2})?$/i.freeze
+
   attr_accessor :speed
   attr_reader :number, :station, :type, :wagons
-  @@all_trains ||= []
 
-  TYPES = %w[Cargo Passenger].freeze # на будущее, если их больше будет
+  validate :number, :format, NUMBER_FORMAT
+  validate :type, :equals, TYPES
+
+  @@all_trains ||= []
 
   def self.find(number)
     @@all_trains.each { |train| return train if train.number == number }
@@ -81,22 +86,5 @@ class Train
     @station.send_train(self)
     @station = prev_station
     @station.get_train(self)
-  end
-
-  protected
-
-  def validate!
-    if number !~ /^[a-zа-я\d]{3}(-[a-zа-я\d]{2})?$/
-      raise 'Wrong number format, must be "xxx" or "xxx-xx", where "x" is any latin/cyrillic letter or number.'
-    end
-    raise 'Wrong train type, must be "Cargo" or "Passenger".' unless TYPES.include?(@type)
-    raise 'A train with this number already exists' if duplicate_number
-  end
-
-  def duplicate_number
-    @@all_trains.each do |train|
-      true if train.number == number
-    end
-    false
   end
 end

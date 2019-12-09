@@ -8,6 +8,9 @@ class Route
   include Validation
   attr_reader :stations, :first_station, :last_station
 
+  validate :first_station, :class, Station
+  validate :last_station, :class, Station
+
   def initialize(first_station, last_station)
     register_instance
     @first_station = first_station
@@ -26,14 +29,5 @@ class Route
 
   def delete_station(name)
     @stations.delete(name) if name != @start_station && name != @last_station
-  end
-
-  protected
-
-  def validate!
-    return unless first_station.class != Station || last_station.class != stations
-
-    raise 'Use valid stations as arguments'
-    # оно и без этого ошибку выдаст (т. к. в методах есть обращения к станциям), но тут будет конкретный понятный текст
   end
 end
