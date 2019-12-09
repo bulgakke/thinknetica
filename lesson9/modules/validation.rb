@@ -18,22 +18,22 @@ module Validation
           var = instance_variable_get("@#{var_name}")
           type = validator[:type_of_validation]
           parameter = validator[:validation_parameter]
-
-          if type == :presence
+          case type
+          when :presence
             raise "#{var} can't be empty" if var.nil? || var.to_s.strip == ''
-          elsif type == :format
+          when :format
             raise 'Use Regexp as a parameter' unless parameter.class == Regexp
             # структурно строчка выше вроде не здесь должна быть, но понятия не имею, куда её деть
             # тут должны быть исключения для юзера (как ниже), а куда класть исключения для кодера?
             raise "Wrong number format for #{var}, should fit #{parameter}" if var !~ parameter
-          elsif type == :class
+          when :class
             unless (parameter.class == Class) || (parameter[0] == Class)
               raise 'Use a proper Class (or an array of them) as a parameter'
             end
             raise "Wrong #{var} class, should be #{parameter}" unless var.class == parameter || parameter.include?(var)
-          elsif type == :equals
+          when :equals
             raise "#{var} should be equal to #{parameter}" unless var == parameter || parameter.include?(var)
-          elsif type == :characters
+          when :characters
             raise "You can only use Latin and Cyrillic, numbers, spaces, '-' and '_'." if invalid_chars?(var) == true
           else
             raise "Wrong 'type' argument for 'validate', should be :presence/:format/:class"
