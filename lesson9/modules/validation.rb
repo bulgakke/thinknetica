@@ -8,14 +8,14 @@ module Validation
 
   module ClassMethods
     
-    @@validators ||= []
 
     def validators 
-      @@validators
+      @validators
     end
 
     def validators_add(validator)
-      @@validators << validator 
+      @validators ||= []
+      @validators << validator 
     end
 
     def validate(var, type, parameter = nil)
@@ -40,6 +40,8 @@ module Validation
         var = instance_variable_get("@#{var_name}")
         type = validator[:type_of_validation]
         parameter = validator[:validation_parameter]
+        send("validate_#{type}", var, parameter)
+=begin
         case type
         when :presence
           validate_presence(var)
@@ -54,10 +56,11 @@ module Validation
         else
           raise "Wrong 'type' argument for 'validate', should be :presence/:format/:class/:equals/:characters"
         end
+=end
       end
     end
 
-    def validate_presence(var)
+    def validate_presence(var, parameter=nil)
       raise "#{var} can't be empty" if var.nil? || var.to_s.strip == ''
     end
 
