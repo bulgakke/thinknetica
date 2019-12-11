@@ -7,22 +7,18 @@ module Validation
   end
 
   module ClassMethods
-    
-
-    def validators 
+    def validators
       @validators
     end
 
     def validators_add(validator)
       @validators ||= []
-      @validators << validator 
+      @validators << validator
     end
 
     def validate(var, type, parameter = nil)
       validator = { variable_to_validate: var, type_of_validation: type, validation_parameter: parameter }
-      # каким образом делать это переменной экземпляра, если validate - это метод класса? И параметры валидации общие для всех объектов класса?
-      # В какую переменную экземпляра он будет складывать параметры? В initialize что-то писать?
-      validators_add(validator)     
+      validators_add(validator)
     end
   end
 
@@ -41,30 +37,14 @@ module Validation
         type = validator[:type_of_validation]
         parameter = validator[:validation_parameter]
         send("validate_#{type}", var, parameter)
-=begin
-        case type
-        when :presence
-          validate_presence(var)
-        when :format
-          validate_format(var, parameter)
-        when :class
-          validate_class(var, parameter)
-        when :equals
-          validate_equals(var, parameter)
-        when :characters
-          validate_characters(var, parameter)
-        else
-          raise "Wrong 'type' argument for 'validate', should be :presence/:format/:class/:equals/:characters"
-        end
-=end
       end
     end
 
-    def validate_presence(var, parameter=nil)
+    def validate_presence(var, _parameter = nil)
       raise "#{var} can't be empty" if var.nil? || var.to_s.strip == ''
     end
 
-    def validate_format(var, parameter)      
+    def validate_format(var, parameter)
       raise 'Use Regexp as a parameter' unless parameter.class == Regexp
       raise "Wrong number format for #{var}, should fit #{parameter}" if var !~ parameter
     end
@@ -83,12 +63,12 @@ module Validation
       raise "#{var} should be equal to #{parameter}" unless var == parameter || parameter.include?(var)
     end
 
-    def validate_characters(var, parameter)
+    def validate_characters(var, _parameter)
       raise "You can only use Latin and Cyrillic, numbers, spaces, '-' and '_'." if invalid_chars?(var)
     end
 
     protected
-    
+
     def invalid_chars?(string)
       allowed = ('A'..'Z').to_a + ('a'..'z').to_a + ('А'..'Я').to_a + ('а'..'я').to_a + ('0'..'9').to_a + ['-', '_', ' ']
       string.chars.each do |character|
